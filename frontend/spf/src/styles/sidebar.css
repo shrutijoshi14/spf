@@ -1,0 +1,129 @@
+.sidebar {
+  height: 100vh;
+  background: #1e1e2f;
+  color: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  width: 220px;
+}
+.sidebar.collapsed {
+  width: 70px;
+}
+
+/* header, toggle, menu — SAME AS YOUR CODE */
+/* ---------- HEADER ---------- */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+  /* background: rgba(255, 255, 255, 0.1); */
+  background: #764ba2;
+}
+
+.toggle-btn:hover {
+  background: #764ba2;
+}
+
+.toggle-btn .bar {
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background: white;
+  transition: 0.3s ease;
+}
+
+/* Position bars */
+.toggle-btn .bar:nth-child(1) {
+  transform: translateY(-5px);
+}
+
+.toggle-btn .bar:nth-child(3) {
+  transform: translateY(5px);
+}
+
+/* OPEN state → X icon */
+.toggle-btn .bar.open:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.toggle-btn .bar.open:nth-child(2) {
+  opacity: 0;
+}
+
+.toggle-btn .bar.open:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* ---------- MENU ---------- */
+.sidebar-menu {
+  list-style: none;
+  padding: 10px;
+  color: white;
+}
+
+.sidebar-menu li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-left 0.2s ease;
+}
+
+.sidebar-menu li:hover {
+  background: #2e2e48;
+  color: #ffffff;
+}
+
+.sidebar-menu li.active {
+  background: linear-gradient(135deg, #5b5fe9, #7b5cff);
+  color: #ffffff;
+  border-left: 4px solid #4f46e5;
+}
+
+.sidebar-menu svg {
+  font-size: 20px;
+  min-width: 20px;
+}
+
+.tab {
+  color: #ffffff !important;
+  font-size: 16px;
+}
+
+/* Hide text when collapsed */
+.sidebar.collapsed .sidebar-menu span {
+  display: none;
+}
