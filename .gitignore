@@ -28,10 +28,18 @@ node_modules/
 # =========================
 # Build outputs
 # =========================
-dist/
-build/
-**/dist/
-**/build/
+# dist/
+# build/
+# **/dist/
+# **/build/
+
+# allow frontend build for github pages
+
+# allow frontend build (GitHub Pages)
+!frontend/
+!frontend/spf/
+!frontend/spf/dist/
+!frontend/spf/dist/**
 
 # =========================
 # Cache & temp files

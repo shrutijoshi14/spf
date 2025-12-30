@@ -24,7 +24,9 @@
 .sidebar-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 35px;
+  margin-left: -3px;
   padding: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -36,20 +38,22 @@
 
 /* Toggle Button */
 .toggle-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
   border-radius: 10px;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: 0.3s ease;
-  /* background: rgba(255, 255, 255, 0.1); */
-  background: #764ba2;
+  background: rgba(255, 255, 255, 0.1);
+  /* background: #764ba2; */
 }
 
 .toggle-btn:hover {
-  background: #764ba2;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .toggle-btn .bar {
@@ -116,6 +120,7 @@
 .sidebar-menu svg {
   font-size: 20px;
   min-width: 20px;
+  margin: 0 -4px;
 }
 
 .tab {
@@ -126,4 +131,22 @@
 /* Hide text when collapsed */
 .sidebar.collapsed .sidebar-menu span {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 2000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 220px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
 }

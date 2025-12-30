@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import '../styles/auth.css';
 
 const Login = () => {
@@ -24,7 +25,7 @@ const Login = () => {
     const storedName = localStorage.getItem('full_name');
     if (storedName) {
       setWelcomeName(storedName);
-      setIsSignUp(true); // show Welcome Back panel
+      setIsSignUp(true);
     }
   }, []);
 
@@ -47,12 +48,14 @@ const Login = () => {
     setError('');
 
     if (signup.password !== signup.confirmPassword) {
-      setError('Passwords do not match');
+      // setError('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:4000/api/auth/signup', {
+      // const res = await axios.post('http://localhost:4000/api/auth/signup', {
+      await axios.post('http://localhost:4000/api/auth/signup', {
         full_name: signup.full_name,
         email: signup.email,
         mobile: signup.mobile,
@@ -60,10 +63,12 @@ const Login = () => {
         role: 'ADMIN',
       });
 
-      alert(res.data.message);
+      // alert(res.data.message);
+      toast.success('Signup successful! Please login 🎉');
+
       setIsSignUp(false);
     } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed');
+      toast.error(err.response?.data?.message || 'Signup failed');
     }
   };
 
@@ -82,13 +87,16 @@ const Login = () => {
       // ⭐ SET NAME FOR WELCOME CARD
       setWelcomeName(res.data.full_name);
 
+      toast.success(`Welcome ${res.data.full_name} 👋`);
+
       setTimeout(() => {
         if (res.data.role === 'SUPERADMIN') navigate('/superadmin');
         else if (res.data.role === 'ADMIN') navigate('/admin');
         else navigate('/staff');
       }, 1200); // 1.2 sec
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials');
+      // setError(err.response?.data?.message || 'Invalid credentials');
+      toast.error(err.response?.data?.message || 'Invalid credentials');
     }
   };
 

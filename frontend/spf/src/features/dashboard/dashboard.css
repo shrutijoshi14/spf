@@ -77,7 +77,7 @@
 
 @media (max-width: 768px) {
   .stat-card {
-    flex-direction: column; /* 🔁 stack on small screens */
+    flex-direction: column;
     text-align: center;
   }
 }
@@ -124,9 +124,20 @@
 }
 
 .chart-card {
-  background: #f9fafb;
-  padding: 20px;
-  border-radius: 14px;
+  background: #f9fafb; /* ✅ same light tone */
+  padding: 22px;
+  border-radius: 16px;
+
+  /* ✅ ADDED (this fixes your issue) */
+  border: 1.5px solid #d1d5db;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.chart-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
 }
 
 .chart-box {

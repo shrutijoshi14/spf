@@ -2,22 +2,43 @@
   height: 64px;
   width: 100%;
   background: #ffffff;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+
   padding: 0 24px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 500;
+
+  transition: width 0.3s ease, margin-left 0.3s ease;
 }
 
-/* WHEN SIDEBAR OPEN */
-.main-content.sidebar-open .topbar {
-  width: calc(100% - 220px);
-  margin-left: 220px;
+.topbar-left,
+.topbar-center,
+.topbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-left {
+  gap: 12px;
+  min-width: 60px;
+}
+
+.topbar-center {
+  gap: 10px;
+  justify-content: center;
+  flex: 1;
+}
+
+.topbar-right {
+  gap: 16px;
+  justify-content: flex-end;
 }
 
 /* dropdown styles — unchanged */
@@ -40,10 +61,14 @@
 
 /* Logo image */
 .logo-img {
-  height: 40px; /* adjust size as needed */
-  width: auto;
+  height: 45px;
+  width: 45px;
   object-fit: contain;
-  border-radius: 6px; /* optional rounded corners */
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+  object-view-box: 0 0 100% 100%;
+  background: rgb(94, 26, 149);
 }
 
 /* Optional: spacing between logo and center title */
@@ -58,6 +83,13 @@
   display: flex;
   justify-content: flex-end;
   gap: 16px;
+}
+
+.topbar-center h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* ================= ICON WRAPPER ================= */
@@ -120,17 +152,35 @@
 }
 
 /* ================= MOBILE SAFETY ================= */
-@media (max-width: 480px) {
-  .dropdown {
-    right: -8px;
-  }
-
+/* Tablet */
+@media (max-width: 1024px) {
   .topbar-center h1 {
     font-size: 22px;
   }
 }
 
-.welcome-text {
-  font-size: 16px;
-  font-weight: 500;
+/* Mobile */
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 14px;
+  }
+
+  .topbar-center h1 {
+    font-size: 18px;
+  }
+
+  .welcome-text {
+    display: none;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 480px) {
+  .topbar-center h1 {
+    display: none;
+  }
+
+  .logo-img {
+    height: 32px;
+  }
 }

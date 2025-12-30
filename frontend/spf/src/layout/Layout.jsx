@@ -19,7 +19,13 @@ const Layout = () => {
       />
 
       <div className={`page-wrapper ${isSidebarOpen ? 'open' : 'collapsed'}`}>
-        <Topbar username={username} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+        {/* <Topbar username={username} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} /> */}
+
+        <Topbar
+          username={username}
+          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          isSidebarOpen={isSidebarOpen}
+        />
 
         <div className="content-area">
           <Dashboard activeTab={activeTab} />

@@ -5,13 +5,16 @@ const Sidebar = ({ isOpen, toggleSidebar, activeTab, setActiveTab }) => {
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
       <div className="sidebar-header">
+        <a href="#">
+          <img src="/spf_logo-removebg-preview.png" alt="SNP Finance Logo" className="logo-img" />
+        </a>
         <button className="toggle-btn" onClick={toggleSidebar}>
           <span className={`bar ${isOpen ? 'open' : ''}`}></span>
           <span className={`bar ${isOpen ? 'open' : ''}`}></span>
           <span className={`bar ${isOpen ? 'open' : ''}`}></span>
         </button>
 
-        {isOpen && <h2>SNPF</h2>}
+        {isOpen}
       </div>
       <ul className="sidebar-menu">
         <li

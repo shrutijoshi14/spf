@@ -31,6 +31,26 @@
   margin-left: var(--sidebar-collapsed);
 }
 
+/* Sidebar open */
+.page-wrapper.open .topbar {
+  width: calc(100% - var(--sidebar-open));
+  margin-left: var(--sidebar-open);
+}
+
+/* Sidebar collapsed */
+.page-wrapper.collapsed .topbar {
+  width: calc(100% - var(--sidebar-collapsed));
+  margin-left: var(--sidebar-collapsed);
+}
+
+/* Mobile: header always full width */
+@media (max-width: 768px) {
+  .topbar {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
 /* Topbar space + main content */
 .content-area {
   padding: 80px 24px 24px;
@@ -56,5 +76,11 @@
 
   .content-area {
     padding: 80px 16px 16px;
+  }
+
+  .page-wrapper.open .topbar,
+  .page-wrapper.collapsed .topbar {
+    width: 100%;
+    left: 0;
   }
 }

@@ -21,6 +21,7 @@ const Charts = () => {
         backgroundColor: '#9192e3ff',
         borderColor: '#76859aff',
         borderWidth: 2,
+        borderRadius: 6, // ✅ small soft bars
       },
     ],
   };
@@ -40,6 +41,34 @@ const Charts = () => {
   const commonOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: '#374151',
+          font: {
+            size: 13,
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          color: '#e5e7eb',
+        },
+        ticks: {
+          color: '#6b7280',
+        },
+      },
+      y: {
+        grid: {
+          color: '#e5e7eb',
+        },
+        ticks: {
+          color: '#6b7280',
+        },
+      },
+    },
   };
 
   return (

@@ -1,17 +1,23 @@
 import '../styles/topbar.css';
 
-const Topbar = ({ username }) => {
+const Topbar = ({ username, toggleSidebar, isSidebarOpen }) => {
   return (
-    <div className="topbar">
+    <div className={'topbar'}>
       {/* Left (Logo) */}
       <div className="topbar-left">
-        <a href="/">
-          <img src="/spf_logo.jpeg" alt="SNP Finance Logo" className="logo-img" />
-        </a>
+        {/* Mobile toggle only when sidebar is hidden */}
+        {!isSidebarOpen && (
+          <button className="mobile-toggle" onClick={toggleSidebar}>
+            ☰
+          </button>
+        )}
       </div>
 
       {/* Center (App Name) */}
       <div className="topbar-center">
+        <a href="/">
+          <img src="/spf_logo-removebg-preview.png" alt="SNP Finance Logo" className="logo-img" />
+        </a>
         <h1>SNP Finance</h1>
       </div>
 
