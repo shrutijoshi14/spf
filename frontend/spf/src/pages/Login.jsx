@@ -80,18 +80,21 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:4000/api/auth/login', signin);
 
+      // ✅ FIXED: Access nested data object
+      const userData = res.data;
+
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       localStorage.setItem('full_name', res.data.full_name);
 
       // ⭐ SET NAME FOR WELCOME CARD
-      setWelcomeName(res.data.full_name);
+      setWelcomeName(userData.full_name);
 
-      toast.success(`Welcome ${res.data.full_name} 👋`);
+      toast.success(`Welcome ${userData.full_name} 👋`);
 
       setTimeout(() => {
-        if (res.data.role === 'SUPERADMIN') navigate('/superadmin');
-        else if (res.data.role === 'ADMIN') navigate('/admin');
+        if (userData.role === 'SUPERADMIN') navigate('/superadmin');
+        else if (userData.role === 'ADMIN') navigate('/admin');
         else navigate('/staff');
       }, 1200); // 1.2 sec
     } catch (err) {

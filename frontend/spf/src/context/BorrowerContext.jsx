@@ -1,32 +1,31 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useBorrowerContext } from './BorrowerContext';
+import { toast } from 'react-toastify';
 
-const LoanContext = createContext();
+const BorrowerContext = createContext();
 
-export const LoanProvider = ({ children }) => {
-  const [loans, setLoans] = useState([]);
+export const BorrowerProvider = ({ children }) => {
+  const [borrowers, setBorrowers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { borrowers, fetchBorrowers } = useBorrowerContext();
 
   const API_URL = 'http://localhost:4000/api';
 
   const getAuthToken = () => localStorage.getItem('token');
 
-  // ✅ Fetch all loans
-  const fetchLoans = async () => {
+  // ✅ Fetch all borrowers
+  const fetchBorrowers = async () => {
     setLoading(true);
     setError(null);
     try {
       const token = getAuthToken();
       if (!token) {
         setError('No authentication token found');
-        setLoans([]);
+        setBorrowers([]);
         return;
       }
 
-      const response = await axios.get(`${API_URL}/loans`, {
+      const response = await axios.get(`${API_URL}/borrowers`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -34,22 +33,22 @@ export const LoanProvider = ({ children }) => {
       });
 
       if (response.data.success) {
-        setLoans(response.data.data || []);
+        setBorrowers(response.data.data || []);
         setError(null);
-        console.log('✅ Loans fetched:', response.data.data);
+        console.log('✅ Borrowers fetched:', response.data.data);
       }
     } catch (err) {
-      console.error('❌ Fetch Loans Error:', err);
-      setError(err.response?.data?.message || 'Failed to fetch loans');
-      setLoans([]);
+      console.error('❌ Fetch Borrowers Error:', err);
+      setError(err.response?.data?.message || 'Failed to fetch borrowers');
+      setBorrowers([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Add loan
-  // ✅ Add loan
-  const addLoan = async (loanData) => {
+  // ✅ Add borrower
+  // ✅ Add borrower
+  const addBorrower = async (borrowerData) => {
     try {
       const token = getAuthToken();
       if (!token) {
@@ -60,31 +59,31 @@ export const LoanProvider = ({ children }) => {
         };
       }
 
-      console.log('📤 Sending loan data:', loanData);
+      console.log('📤 Sending borrower data:', borrowerData);
       console.log('🔑 Token:', token);
 
-      const response = await axios.post(`${API_URL}/loans`, loanData, {
+      const response = await axios.post(`${API_URL}/borrowers`, borrowerData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      console.log('✅ Loan creation response:', response.data);
+      console.log('✅ Response:', response.data);
 
       if (response.data.success) {
         // Fetch fresh data from backend
-        await fetchLoans();
-        toast.success(response.data.message || 'Loan created successfully');
+        await fetchBorrowers();
+        toast.success(response.data.message || 'Borrower added successfully');
         return {
           success: true,
-          message: response.data.message || 'Loan created successfully',
+          message: response.data.message || 'Borrower added successfully',
           data: response.data.data,
         };
       }
     } catch (err) {
       console.log('❌ Full Error Response:', err.response?.data);
-      console.error('❌ Add Loan Error:', err);
+      console.error('❌ Add Borrower Error:', err);
 
       // ✅ Handle validation errors specifically
       if (err.response?.data?.errors) {
@@ -98,7 +97,7 @@ export const LoanProvider = ({ children }) => {
         };
       }
 
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to add loan';
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to add borrower';
       toast.error(errorMessage);
       return {
         success: false,
@@ -107,37 +106,34 @@ export const LoanProvider = ({ children }) => {
     }
   };
 
-  // Load initial data
+  // Load borrowers on mount
   useEffect(() => {
     const token = getAuthToken();
     if (token) {
-      fetchLoans();
       fetchBorrowers();
     }
   }, []);
 
   return (
-    <LoanContext.Provider
+    <BorrowerContext.Provider
       value={{
-        loans,
         borrowers,
         loading,
         error,
-        addLoan,
-        fetchLoans,
+        addBorrower,
         fetchBorrowers,
-        setLoans,
+        setBorrowers,
       }}
     >
       {children}
-    </LoanContext.Provider>
+    </BorrowerContext.Provider>
   );
 };
 
-export const useLoanContext = () => {
-  const context = useContext(LoanContext);
+export const useBorrowerContext = () => {
+  const context = useContext(BorrowerContext);
   if (!context) {
-    throw new Error('useLoanContext must be used within LoanProvider');
+    throw new Error('useBorrowerContext must be used within BorrowerProvider');
   }
   return context;
 };

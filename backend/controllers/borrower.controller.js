@@ -1,0 +1,48 @@
+const borrowerService = require('../services/borrower.service');
+
+exports.getAll = async (req, res) => {
+  try {
+    const data = await borrowerService.getAll();
+    res.status(200).json({ success: true, data });
+  } catch (err) {
+    console.error('Get All Borrowers Error:', err.message);
+    res.status(500).json({ success: false, message: err.message || 'Server error' });
+  }
+};
+
+exports.createBorrower = async (req, res) => {
+  try {
+    const borrower = await borrowerService.createBorrower(req.body);
+    res.status(201).json({
+      success: true,
+      message: 'Borrower added successfully',
+      data: borrower,
+    });
+  } catch (err) {
+    console.error('Create Borrower Error:', err.message);
+    res.status(400).json({
+      success: false,
+      message: err.message || 'Server error',
+    });
+  }
+};
+
+exports.update = async (req, res) => {
+  try {
+    await borrowerService.update(req.params.id, req.body);
+    res.status(200).json({ success: true, message: 'Borrower updated successfully' });
+  } catch (err) {
+    console.error('Update Borrower Error:', err.message);
+    res.status(400).json({ success: false, message: err.message || 'Server error' });
+  }
+};
+
+exports.remove = async (req, res) => {
+  try {
+    await borrowerService.remove(req.params.id);
+    res.status(200).json({ success: true, message: 'Borrower disabled successfully' });
+  } catch (err) {
+    console.error('Remove Borrower Error:', err.message);
+    res.status(400).json({ success: false, message: err.message || 'Server error' });
+  }
+};
