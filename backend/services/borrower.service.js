@@ -40,8 +40,8 @@ exports.createBorrower = async (data) => {
   if (data.guarantorName) {
     await db.promise().query(
       `INSERT INTO guarantors
-       (borrower_id, name, mobile, address, relation)
-       VALUES (?, ?, ?, ?, ?)`,
+        (borrower_id, name, mobile, address, relation)
+        VALUES (?, ?, ?, ?, ?)`,
       [
         borrowerId,
         data.guarantorName,
@@ -61,4 +61,27 @@ exports.update = async (id, data) => {
 
 exports.remove = async (id) => {
   await db.promise().query("UPDATE borrowers SET status='DISABLED' WHERE borrower_id=?", [id]);
+};
+
+exports.getAllBorrowers = () => {
+  return new Promise((resolve, reject) => {
+    const sql = `
+      SELECT
+        borrower_id,
+        full_name,
+        mobile,
+        address,
+        created_at
+      FROM borrowers
+      ORDER BY borrower_id DESC
+    `;
+
+    db.query(sql, (err, results) => {
+      if (err) {
+        console.error('❌ DB Error:', err);
+        return reject(err);
+      }
+      resolve(results);
+    });
+  });
 };

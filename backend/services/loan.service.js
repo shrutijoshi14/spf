@@ -81,3 +81,34 @@ exports.createLoan = async (data) => {
     throw new Error(err.message);
   }
 };
+
+exports.getLoanDetails = async (loanId) => {
+  const [loanRows] = await db.query(
+    `SELECT l.*, b.full_name, b.mobile, b.address
+     FROM loans l
+     JOIN borrowers b ON b.borrower_id = l.borrower_id
+     WHERE l.loan_id = ?`,
+    [loanId]
+  );
+
+  if (loanRows.length === 0) throw new Error('Loan not found');
+
+  const loan = loanRows[0];
+
+  const [payments] = await db.query(
+    'SELECT * FROM payments WHERE loan_id = ? ORDER BY payment_date DESC',
+    [loanId]
+  );
+
+  const [topups] = await db.query(
+    'SELECT * FROM loan_topups WHERE loan_id = ? ORDER BY topup_date DESC',
+    [loanId]
+  );
+
+  const [penalties] = await db.query(
+    'SELECT * FROM penalties WHERE loan_id = ? ORDER BY penalty_date DESC',
+    [loanId]
+  );
+
+  return { loan, payments, topups, penalties };
+};
