@@ -1,50 +1,53 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLoanContext } from '../../context/LoanContext';
 import AddBorrowerModal from '../borrowers/modals/AddBorrowerModal';
 import Buttons from '../dashboard/components/Buttons';
 import LoansTable from './components/LoansTable';
 import './loans.css';
 import AddLoanModal from './modals/AddLoanModal';
-
-import { useLoanContext } from '../../context/LoanContext'; // ✅ ADD
+import PaymentModal from './modals/PaymentModal';
+import ViewLoanModal from './modals/ViewLoanModal';
 
 const LoansPage = () => {
-  const navigate = useNavigate();
-
-  const { borrowers, addBorrower, addLoan } = useLoanContext(); // ✅ CONTEXT
+  const { loans, borrowers, addBorrower, addLoan } = useLoanContext();
 
   const [openBorrowerModal, setOpenBorrowerModal] = useState(false);
   const [openLoanModal, setOpenLoanModal] = useState(false);
+  const [openView, setOpenView] = useState(false);
+  const [openPay, setOpenPay] = useState(false);
 
-  const handleView = (row) => navigate(`/loans/${row.id}`);
-  const handleEdit = (row) => console.log('Edit Loan', row);
-  const handleDelete = (row) => console.log('Delete later', row);
-  const handlePay = (row) => console.log('Pay EMI', row);
+  const [selectedLoan, setSelectedLoan] = useState(null);
+
+  const handleView = (row) => {
+    setSelectedLoan(row);
+    setOpenView(true);
+  };
+
+  const handlePayClick = (row) => {
+    setSelectedLoan(row);
+    setOpenPay(true);
+  };
+
+  const handlePaymentSubmit = (paymentData) => {
+    console.log('💰 Payment Submit:', paymentData);
+    setOpenPay(false);
+  };
 
   return (
     <div className="loans-page">
       <div className="page-header">
-        <div className="page-header-left">
-          <h2 className="page-title">💵 Loans</h2>
-          <p className="page-subtitle">Manage borrowers, loans, and payments</p>
+        <div>
+          <h2>💵 Loans</h2>
+          <p>Manage borrowers, loans and payments</p>
         </div>
 
-        <div className="page-header-right">
-          <Buttons
-            onAddBorrower={() => setOpenBorrowerModal(true)}
-            onAddLoan={() => setOpenLoanModal(true)}
-          />
-        </div>
+        <Buttons
+          onAddBorrower={() => setOpenBorrowerModal(true)}
+          onAddLoan={() => setOpenLoanModal(true)}
+        />
       </div>
 
-      {/* ✅ TABLE NOW USES CONTEXT DATA */}
-      <LoansTable
-        borrowers={borrowers}
-        onView={handleView}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onPay={handlePay}
-      />
+      <LoansTable onView={handleView} onPay={handlePayClick} />
 
       <AddBorrowerModal
         open={openBorrowerModal}
@@ -53,6 +56,21 @@ const LoansPage = () => {
       />
 
       <AddLoanModal open={openLoanModal} onClose={() => setOpenLoanModal(false)} onSave={addLoan} />
+
+      {/* ✅ VIEW LOAN MODAL */}
+      <ViewLoanModal
+        open={openView}
+        loanId={selectedLoan?.loan_id}
+        onClose={() => setOpenView(false)}
+      />
+
+      {/* ✅ PAYMENT MODAL */}
+      <PaymentModal
+        open={openPay}
+        loan={selectedLoan}
+        onClose={() => setOpenPay(false)}
+        onSubmit={handlePaymentSubmit}
+      />
     </div>
   );
 };

@@ -3,17 +3,18 @@ import Button from '../../../common/Button';
 import Modal from '../../../common/Modal';
 import Select from '../../../common/Select';
 
-const PaymentModal = ({ loan, onPay }) => {
-  // ✅ HOOKS MUST BE INSIDE COMPONENT
+const PaymentModal = ({ open, loan, onClose, onSubmit }) => {
   const [type, setType] = useState('EMI');
   const [amount, setAmount] = useState('');
 
+  if (!open || !loan) return null;
+
   return (
-    <Modal open title="Make Payment">
+    <Modal open={open} title="Make Payment" onClose={onClose}>
       <Select
-        options={['EMI', 'PRINCIPAL', 'INTEREST', 'PENALTY', 'TOPUP']}
+        options={['EMI', 'PRINCIPAL', 'INTEREST', 'PENALTY']}
         value={type}
-        onChange={(e) => setType(e.target.value)}
+        onChange={(value) => setType(value)}
       />
 
       <input
@@ -26,8 +27,8 @@ const PaymentModal = ({ loan, onPay }) => {
       <Button
         text="Pay Now"
         onClick={() =>
-          onPay({
-            loanId: loan.id,
+          onSubmit({
+            loanId: loan.loan_id,
             type,
             amount: Number(amount),
           })

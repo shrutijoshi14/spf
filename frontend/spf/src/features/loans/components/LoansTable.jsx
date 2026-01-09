@@ -5,25 +5,24 @@ import { useLoanContext } from '../../../context/LoanContext';
 const LoansTable = ({ onView, onPay }) => {
   const { loans, borrowers } = useLoanContext();
 
-  const getBorrowerName = (id) => borrowers.find((b) => b.id === id)?.fullName || '—';
+  const getBorrowerName = (borrowerId) =>
+    borrowers.find((b) => b.borrower_id === borrowerId)?.full_name || '—';
 
   const columns = [
     { key: 'sr', label: 'Sr No', render: (_, i) => i + 1 },
     {
       key: 'borrower',
       label: 'Borrower Name',
-      render: (row) => getBorrowerName(row.borrowerId),
+      render: (row) => getBorrowerName(row.borrower_id),
     },
-    { key: 'principal', label: 'Principal' },
-    { key: 'interestRate', label: 'Interest %' },
-    { key: 'outstanding', label: 'Outstanding' },
-    { key: 'monthlyInterest', label: 'Monthly Interest' },
+    { key: 'principal_amount', label: 'Principal' },
+    { key: 'interest_rate', label: 'Interest %' },
+    { key: 'outstanding_amount', label: 'Outstanding' },
     {
       key: 'status',
       label: 'Status',
       render: (row) => <span className={`loan-status ${row.status}`}>{row.status}</span>,
     },
-
     {
       key: 'actions',
       label: 'Actions',

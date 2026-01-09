@@ -25,3 +25,20 @@ exports.createLoan = async (req, res) => {
     });
   }
 };
+
+exports.getLoanDetails = async (req, res) => {
+  try {
+    const loanId = req.params.loanId;
+    const data = await loanService.getLoanDetails(loanId);
+
+    res.json({
+      success: true,
+      data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};

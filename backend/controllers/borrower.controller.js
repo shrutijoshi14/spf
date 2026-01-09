@@ -46,3 +46,21 @@ exports.remove = async (req, res) => {
     res.status(400).json({ success: false, message: err.message || 'Server error' });
   }
 };
+
+exports.getAllBorrowers = async (req, res) => {
+  try {
+    const borrowers = await borrowerService.getAllBorrowers();
+
+    return res.status(200).json({
+      success: true,
+      data: borrowers,
+    });
+  } catch (error) {
+    console.error('❌ Get Borrowers Error:', error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch borrowers',
+    });
+  }
+};

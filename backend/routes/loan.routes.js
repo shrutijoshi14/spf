@@ -14,6 +14,14 @@ router.get(
   loanController.getAllLoans
 );
 
+// ✅ Get loan details
+router.get(
+  '/:loanId/details',
+  authenticate,
+  authorize('ADMIN', 'SUPERADMIN', 'STAFF'),
+  loanController.getLoanDetails
+);
+
 // ✅ Create loan
 router.post(
   '/',

@@ -21,7 +21,7 @@ const Table = ({ columns = [], data = [] }) => {
             </tr>
           ) : (
             data.map((row, i) => (
-              <tr key={row.id || i}>
+              <tr key={row.loan_id || i}>
                 {columns.map((col) => (
                   <td key={col.key}>{col.render ? col.render(row, i) : row[col.key]}</td>
                 ))}

@@ -175,7 +175,7 @@ const AddBorrowerModal = ({ open, onClose }) => {
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="Email"
+                  label="Email *"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
@@ -183,7 +183,7 @@ const AddBorrowerModal = ({ open, onClose }) => {
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="Address Line 1"
+                  label="Address Line 1 *"
                   name="address1"
                   value={form.address1}
                   onChange={handleChange}
@@ -199,21 +199,21 @@ const AddBorrowerModal = ({ open, onClose }) => {
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="City"
+                  label="City *"
                   name="city"
                   value={form.city}
                   onChange={handleChange}
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="State"
+                  label="State *"
                   name="state"
                   value={form.state}
                   onChange={handleChange}
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="Pin Code"
+                  label="Pin Code *"
                   name="pinCode"
                   value={form.pinCode}
                   onChange={handleChange}
@@ -223,7 +223,7 @@ const AddBorrowerModal = ({ open, onClose }) => {
               </div>
             </Section>
 
-            <Section title="Guarantor Details">
+            <Section title="Guarantor Details *">
               <div className="form-grid">
                 <Input
                   label="Guarantor Name"
@@ -233,14 +233,14 @@ const AddBorrowerModal = ({ open, onClose }) => {
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="Guarantor Phone"
+                  label="Guarantor Phone *"
                   name="guarantorPhone"
                   value={form.guarantorPhone}
                   onChange={handleChange}
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="Guarantor Address"
+                  label="Guarantor Address *"
                   name="guarantorAddress"
                   value={form.guarantorAddress}
                   onChange={handleChange}
@@ -250,17 +250,17 @@ const AddBorrowerModal = ({ open, onClose }) => {
               </div>
             </Section>
 
-            <Section title="Relative Details">
+            <Section title="Relative Details *">
               <div className="form-grid">
                 <Input
-                  label="Relative Phone"
+                  label="Relative Phone *"
                   name="relativesPhone"
                   value={form.relativesPhone}
                   onChange={handleChange}
                   disabled={isSubmitting}
                 />
                 <Input
-                  label="Relation"
+                  label="Relation *"
                   name="relation"
                   value={form.relation}
                   onChange={handleChange}
